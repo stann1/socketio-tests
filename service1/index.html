@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<script src="/socket.io/socket.io.js"></script>
+
+<body>
+    <h1>Tva neshto tuka</h1>
+    <ul id="list"></ul>
+    <span>entityid </span><span id="entity"></span>
+</body>
+
+<script>
+    function getRandomIntInclusive(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    const entityId = getRandomIntInclusive(1, 5);
+    document.getElementById('entity').innerHTML = entityId;
+
+    var socket = io(`/${entityId}`);
+    socket.on('notif', (msg) => {
+        document.getElementById('list').innerHTML = document.getElementById('list').innerHTML + `<li>${msg}</li>`;
+    })
+</script>
+
+</html>
