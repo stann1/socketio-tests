@@ -1,13 +1,12 @@
 const axios = require('axios');
 
 setInterval(()=>{
-    const ent = getRandomIntInclusive(1, 5);
+    const ent = getRandomIntInclusive(9, 11);
     axios.post('http://localhost:3000/event', {
         time: new Date().toString() + " FOR ENTITY " + ent,
         entity: ent
     })
     .then((response) => console.log(response.data))
-    .catch(e => console.log(e))
 }, 1000)
 
 function getRandomIntInclusive(min, max) {

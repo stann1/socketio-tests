@@ -11,24 +11,17 @@
 
 <body>
     <h1>Tva neshto tuka</h1>
-    <ul id="list"></ul>
-    <span>entityid </span><span id="entity"></span>
+    <div id='test'>gosho</div>
 </body>
 
 <script>
-    function getRandomIntInclusive(min, max) {
-        min = Math.ceil(min);
-        max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-
-    const entityId = getRandomIntInclusive(1, 5);
-    document.getElementById('entity').innerHTML = entityId;
-
-    var socket = io(`/${entityId}`);
-    socket.on('notif', (msg) => {
-        document.getElementById('list').innerHTML = document.getElementById('list').innerHTML + `<li>${msg}</li>`;
-    })
+    (()=>{
+        const socket = io();
+        socket.on('event', (time)=>{
+            document.write(time + "<br/>")
+            console.log('receiv event', time);
+        })
+    })()
 </script>
 
 </html>
