@@ -11,6 +11,7 @@ app.post('/event', function (req, res) {
 });
 
 io.on('connection', (socket)=>{
+    console.log('socket connection established');
     if(socket.handshake.headers.cookie.includes('consentio')) { // authenticate user and get entity id
         console.log('socket connected and joined room 10-entity')
         socket.join('10-entity'); // join entity room.
@@ -20,6 +21,17 @@ io.on('connection', (socket)=>{
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
 });
+
+app.get('/login', (req,res,next) => {
+    console.log('user logged-in');
+    res.status(200).cookie("consentio", "hash-aadfag442t5245").send();
+})
+
+app.get('/logout', (req,res,next) => {
+    console.log('user logged-out');
+    res.clearCookie('consentio');
+    res.status(200).send({message: 'Logout success'});
+})
 
 http.listen(3000, function () {
     console.log('listening on *:3000');
