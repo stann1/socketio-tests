@@ -11,12 +11,15 @@ app.post('/event', function (req, res) {
 });
 
 io.on('connection', (socket)=>{
-    console.log('socket connection established');
-    if(socket.handshake.headers.cookie.includes('consentio')) { // authenticate user and get entity id
+    console.log('new socket connection established: ' + socket.client.id);
+    socket.on('disconnect', (reason) => {
+        console.log(`Client ${socket.client.id} disconnected: ` + reason);
+    })
+    if(socket.handshake.headers.cookie && socket.handshake.headers.cookie.includes('consentio')) { // authenticate user and get entity id
         console.log('socket connected and joined room 10-entity')
         socket.join('10-entity'); // join entity room.
     }
-})
+});
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
